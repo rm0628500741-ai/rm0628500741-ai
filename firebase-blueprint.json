@@ -1,0 +1,109 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Public and private user information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "preferredLanguage": { "type": "string", "enum": ["ar", "fr", "en"] },
+        "cv_completed": { "type": "boolean" },
+        "profession": { "type": "string" },
+        "lastJob": { "type": "string" },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "goal": { "type": "string" },
+        "hasCV": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "CRSAnalysis": {
+      "title": "CRS Analysis",
+      "description": "Stored CRS calculation results",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "answers": { "type": "object" },
+        "result": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "answers", "result"]
+    },
+    "CV": {
+      "title": "CV Document",
+      "description": "Generated or uploaded CV",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "fullName": { "type": "string" },
+        "fileUrls": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Consultation": {
+      "title": "Consultation Request",
+      "description": "User request for professional advice",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "type": { "type": "string" },
+        "message": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "accepted", "completed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Application": {
+      "title": "Job Application",
+      "description": "Tracking user job applications",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "jobId": { "type": "string" },
+        "jobTitle": { "type": "string" },
+        "company": { "type": "string" },
+        "appliedAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string" }
+      }
+    },
+    "Admin": {
+      "title": "Admin User",
+      "description": "Registry of users with administrative privileges",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "addedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "user_profiles/{userId}": {
+      "schema": "UserProfile",
+      "description": "Main user records"
+    },
+    "crs_analyses/{analysisId}": {
+      "schema": "CRSAnalysis",
+      "description": "History of CRS checks"
+    },
+    "cvs/{cvId}": {
+      "schema": "CV",
+      "description": "Generated curriculum vitaes"
+    },
+    "consultations/{consultationId}": {
+      "schema": "Consultation",
+      "description": "Migration consultations"
+    },
+    "applications/{applicationId}": {
+      "schema": "Application",
+      "description": "Job application tracking"
+    },
+    "admins/{userId}": {
+      "schema": "Admin",
+      "description": "Privileged users"
+    }
+  }
+}
